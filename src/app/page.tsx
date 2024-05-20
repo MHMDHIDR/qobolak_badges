@@ -6,6 +6,7 @@ import BadgeForm from '../components/BadgeForm'
 import BadgeCard from '../components/BadgeCard'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
+import { Button } from '@/components/ui/button'
 
 export default function Home() {
   const [names, setNames] = useState<string[]>([])
@@ -96,13 +97,13 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <button
+        <Button
           type='button'
           onClick={handlePrint}
           className='px-4 py-2 mt-4 text-white bg-green-500 rounded'
         >
           Print Selected
-        </button>
+        </Button>
       </div>
     </main>
   )

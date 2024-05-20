@@ -1,5 +1,6 @@
 // components/BadgeForm.tsx
 import { useState } from 'react'
+import { Button } from './ui/button'
 
 interface BadgeFormProps {
   onGenerate: (
@@ -102,26 +103,26 @@ const BadgeForm: React.FC<BadgeFormProps> = ({ onGenerate }) => {
             className='flex-grow p-2 border rounded mr-2'
             placeholder={`Enter title ${index + 1}`}
           />
-          <button
+          <Button
             type='button'
             onClick={() => handleRemoveInput(index)}
             className='px-2 py-1 text-white bg-red-500 rounded'
           >
             Remove
-          </button>
+          </Button>
         </div>
       ))}
       <div className='flex justify-between'>
-        <button
+        <Button
           type='button'
           onClick={handleAddInput}
           className='px-4 py-2 text-white bg-purple-500 rounded'
         >
           Add Name
-        </button>
-        <button type='submit' className='px-4 py-2 text-white bg-blue-500 rounded'>
+        </Button>
+        <Button type='submit' className='px-4 py-2 text-white bg-blue-500 rounded'>
           Generate Badges
-        </button>
+        </Button>
       </div>
     </form>
   )
