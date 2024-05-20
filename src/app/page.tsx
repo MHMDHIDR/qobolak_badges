@@ -4,6 +4,8 @@
 import { useState, useRef } from 'react'
 import BadgeForm from '../components/BadgeForm'
 import BadgeCard from '../components/BadgeCard'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 export default function Home() {
   const [names, setNames] = useState<string[]>([])
@@ -11,7 +13,6 @@ export default function Home() {
   const [leftLogo, setLeftLogo] = useState<string | null>(null)
   const [rightLogo, setRightLogo] = useState<string | null>(null)
   const [selectedCards, setSelectedCards] = useState<boolean[]>([])
-  const printRef = useRef<HTMLDivElement>(null)
 
   const handleGenerate = (
     names: string[],
@@ -32,27 +33,43 @@ export default function Home() {
     setSelectedCards(newSelectedCards)
   }
 
-  const handlePrint = () => {
-    if (printRef.current) {
-      const printWindow = window.open('', '', 'width=800,height=600')
-      if (printWindow) {
-        printWindow.document.write('<html><head><title>Print Badges</title>')
-        printWindow.document.write(
-          '<style>@media print { body { -webkit-print-color-adjust: exact; } .badge-card { page-break-inside: avoid; } }</style></head><body>'
-        )
-        selectedCards.forEach((selected, index) => {
-          if (selected) {
-            const card = document.querySelector(`#card-${index}`)
-            if (card) {
-              printWindow.document.write(card.outerHTML)
-            }
-          }
-        })
-        printWindow.document.write('</body></html>')
-        printWindow.document.close()
-        printWindow.print()
+  const handlePrint = async () => {
+    const doc = new jsPDF('p', 'mm', 'a4')
+    const selectedElements = document.querySelectorAll('.badge-card.selected')
+
+    const cardWidth = 90 // Adjust based on desired card size
+    const cardHeight = 50 // Adjust based on desired card size
+    const margin = 10
+
+    let x = margin
+    let y = margin
+
+    for (let i = 0; i < selectedElements.length; i++) {
+      const element = selectedElements[i] as HTMLElement
+      const canvas = await html2canvas(element)
+      const imgData = canvas.toDataURL('image/png')
+
+      if (x + cardWidth > doc.internal.pageSize.getWidth() - margin) {
+        x = margin
+        y += cardHeight + margin
       }
+
+      if (y + cardHeight > doc.internal.pageSize.getHeight() - margin) {
+        doc.addPage()
+        x = margin
+        y = margin
+      }
+
+      doc.addImage(imgData, 'PNG', x, y, cardWidth, cardHeight)
+      x += cardWidth + margin
     }
+
+    // Remove the class after printing
+    selectedElements.forEach(element => {
+      element.classList.remove('hide-on-print')
+    })
+
+    doc.save('badges.pdf')
   }
 
   return (
@@ -66,7 +83,7 @@ export default function Home() {
               key={index}
               id={`card-${index}`}
               className={`relative border rounded-lg badge-card ${
-                selectedCards[index] ? 'border-blue-500' : 'border-gray-300'
+                selectedCards[index] ? 'border-slate-500 selected' : 'border-gray-300'
               }`}
               onClick={() => handleSelectCard(index)}
             >
@@ -76,11 +93,6 @@ export default function Home() {
                 leftLogo={leftLogo}
                 rightLogo={rightLogo}
               />
-              {selectedCards[index] && (
-                <div className='absolute top-0 right-0 p-2 text-white bg-blue-500'>
-                  Selected
-                </div>
-              )}
             </div>
           ))}
         </div>
@@ -92,7 +104,6 @@ export default function Home() {
           Print Selected
         </button>
       </div>
-      <div ref={printRef} className='hidden'></div>
     </main>
   )
 }

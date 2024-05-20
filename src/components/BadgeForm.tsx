@@ -58,9 +58,12 @@ const BadgeForm: React.FC<BadgeFormProps> = ({ onGenerate }) => {
     <form onSubmit={handleSubmit} className='mb-4'>
       <div className='flex mb-4'>
         <div className='flex flex-col items-center'>
-          <label className='mb-2'>Left Logo</label>
+          <label className='mb-2 cursor-pointer' htmlFor='left-logo'>
+            Left Logo
+          </label>
           <input
             type='file'
+            id='left-logo'
             accept='image/*'
             onChange={e => handleLogoChange(e, setLeftLogo)}
             className='w-40 h-24 cursor-pointer'
@@ -68,9 +71,12 @@ const BadgeForm: React.FC<BadgeFormProps> = ({ onGenerate }) => {
           {leftLogo && <img src={leftLogo} alt='Left Logo' className='mt-2 w-40 h-24' />}
         </div>
         <div className='flex flex-col items-center ml-4'>
-          <label className='mb-2'>Right Logo</label>
+          <label className='mb-2 cursor-pointer' htmlFor='right-logo'>
+            Right Logo
+          </label>
           <input
             type='file'
+            id='right-logo'
             accept='image/*'
             onChange={e => handleLogoChange(e, setRightLogo)}
             className='w-40 h-24 cursor-pointer'
