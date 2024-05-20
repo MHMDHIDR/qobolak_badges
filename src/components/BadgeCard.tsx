@@ -1,4 +1,3 @@
-// components/BadgeCard.tsx
 import Image from 'next/image'
 
 interface BadgeCardProps {

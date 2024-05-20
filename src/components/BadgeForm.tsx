@@ -1,4 +1,3 @@
-// components/BadgeForm.tsx
 import { useState } from 'react'
 import { Button } from './ui/button'
 
@@ -57,8 +56,8 @@ const BadgeForm: React.FC<BadgeFormProps> = ({ onGenerate }) => {
 
   return (
     <form onSubmit={handleSubmit} className='mb-4'>
-      <div className='flex mb-4'>
-        <div className='flex flex-col items-center'>
+      <div className='flex flex-wrap justify-center mb-4'>
+        <div className='flex flex-col items-center mx-2'>
           <label className='mb-2 cursor-pointer' htmlFor='left-logo'>
             Left Logo
           </label>
@@ -67,11 +66,13 @@ const BadgeForm: React.FC<BadgeFormProps> = ({ onGenerate }) => {
             id='left-logo'
             accept='image/*'
             onChange={e => handleLogoChange(e, setLeftLogo)}
-            className='w-40 h-24 cursor-pointer'
+            className='w-32 h-24 cursor-pointer md:w-40'
           />
-          {leftLogo && <img src={leftLogo} alt='Left Logo' className='mt-2 w-40 h-24' />}
+          {leftLogo && (
+            <img src={leftLogo} alt='Left Logo' className='mt-2 w-32 h-24 md:w-40' />
+          )}
         </div>
-        <div className='flex flex-col items-center ml-4'>
+        <div className='flex flex-col items-center mx-2'>
           <label className='mb-2 cursor-pointer' htmlFor='right-logo'>
             Right Logo
           </label>
@@ -80,27 +81,27 @@ const BadgeForm: React.FC<BadgeFormProps> = ({ onGenerate }) => {
             id='right-logo'
             accept='image/*'
             onChange={e => handleLogoChange(e, setRightLogo)}
-            className='w-40 h-24 cursor-pointer'
+            className='w-32 h-24 cursor-pointer md:w-40'
           />
           {rightLogo && (
-            <img src={rightLogo} alt='Right Logo' className='mt-2 w-40 h-24' />
+            <img src={rightLogo} alt='Right Logo' className='mt-2 w-32 h-24 md:w-40' />
           )}
         </div>
       </div>
       {inputs.map((input, index) => (
-        <div key={index} className='flex items-center mb-2'>
+        <div key={index} className='flex flex-wrap items-center mb-2'>
           <input
             type='text'
             value={input.name}
             onChange={e => handleInputChange(index, 'name', e.target.value)}
-            className='flex-grow p-2 border rounded mr-2'
+            className='flex-grow p-2 border rounded mr-2 mb-2 md:mb-0'
             placeholder={`Enter name ${index + 1}`}
           />
           <input
             type='text'
             value={input.title}
             onChange={e => handleInputChange(index, 'title', e.target.value)}
-            className='flex-grow p-2 border rounded mr-2'
+            className='flex-grow p-2 border rounded mr-2 mb-2 md:mb-0'
             placeholder={`Enter title ${index + 1}`}
           />
           <Button
@@ -112,7 +113,7 @@ const BadgeForm: React.FC<BadgeFormProps> = ({ onGenerate }) => {
           </Button>
         </div>
       ))}
-      <div className='flex justify-between'>
+      <div className='flex justify-between mt-4'>
         <Button
           type='button'
           onClick={handleAddInput}

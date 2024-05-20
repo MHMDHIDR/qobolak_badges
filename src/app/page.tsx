@@ -1,7 +1,6 @@
-// src/app/page.tsx (Home)
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import BadgeForm from '../components/BadgeForm'
 import BadgeCard from '../components/BadgeCard'
 import html2canvas from 'html2canvas'
@@ -65,18 +64,13 @@ export default function Home() {
       x += cardWidth + margin
     }
 
-    // Remove the class after printing
-    selectedElements.forEach(element => {
-      element.classList.remove('hide-on-print')
-    })
-
     doc.save('badges.pdf')
   }
 
   return (
-    <main className='flex flex-col items-center justify-between min-h-screen p-24'>
+    <main className='flex flex-col items-center justify-between min-h-screen p-4 lg:p-24'>
       <div className='container p-4 mx-auto'>
-        <h1 className='mb-4 text-2xl font-bold'>Staff Badge Generator</h1>
+        <h1 className='mb-4 text-2xl font-bold text-center'>Staff Badge Generator</h1>
         <BadgeForm onGenerate={handleGenerate} />
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {names.map((name, index) => (
@@ -97,13 +91,15 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <Button
-          type='button'
-          onClick={handlePrint}
-          className='px-4 py-2 mt-4 text-white bg-green-500 rounded'
-        >
-          Print Selected
-        </Button>
+        <div className='flex justify-center mt-4'>
+          <Button
+            type='button'
+            onClick={handlePrint}
+            className='px-4 py-2 mt-4 text-white bg-green-500 rounded'
+          >
+            Print Selected
+          </Button>
+        </div>
       </div>
     </main>
   )
