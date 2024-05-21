@@ -96,6 +96,7 @@ export default function Home() {
             type='button'
             onClick={handlePrint}
             className='px-4 py-2 mt-4 text-white bg-green-500 rounded'
+            disabled={selectedCards.every(selected => !selected)}
           >
             Print Selected
           </Button>
