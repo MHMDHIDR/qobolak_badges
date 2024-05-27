@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     url: 'https://qobolak-badges.vercel.app',
     images: [
       {
-        url: '/logo.png',
+        url: 'https://qobolak-badges.vercel.app/logo.png',
         width: 1200,
         height: 630,
         alt: 'Qobolak Badge Generator'
